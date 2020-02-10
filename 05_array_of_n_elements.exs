@@ -1,3 +1,4 @@
+# echo -e "10\n" | elixir 05_array_of_n_elements.exs
 defmodule Solution do
   def read_int() do
     case IO.gets "" do
