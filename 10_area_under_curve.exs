@@ -35,6 +35,10 @@ defmodule Solution do
     f(expr, x) * dx
   end
 
+  def dx_volume(expr, x, dx) do
+    :math.pow(f(expr, x), 2) * :math.pi() * dx
+  end
+
   def main() do
     { _, coeffs } = read_int_list()
     { _, powers } = read_int_list()
@@ -47,7 +51,13 @@ defmodule Solution do
       Stream.map(fn i -> dx_square(expr, i, 0.001) end) |>
       Enum.sum
 
+    volume = Stream.iterate(l, fn i -> i + 0.001 end) |>
+      Stream.take_while(fn i -> i < r end) |>
+      Stream.map(fn i -> dx_volume(expr, i, 0.001) end) |>
+      Enum.sum
+
     IO.puts :erlang.float_to_binary(surface, [decimals: 1])
+    IO.puts :erlang.float_to_binary(volume, [decimals: 1])
   end
 
 end
